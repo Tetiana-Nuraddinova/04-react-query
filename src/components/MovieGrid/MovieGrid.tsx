@@ -1,4 +1,5 @@
 import React from "react";
+import type { KeyboardEvent } from "react";
 import type { Movie } from "../../types/movie";
 import css from "./MovieGrid.module.css";
 
@@ -10,6 +11,9 @@ const POSTER_BASE = "https://image.tmdb.org/t/p/w500";
 const PLACEHOLDER = "https://via.placeholder.com/500x750?text=No+Image";
 export const MovieGrid: React.FC<MovieGridProps> = ({ movies, onSelect }) => {
   if (!movies || movies.length === 0) return null;
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>, movie: Movie) => {
+    if (e.key === "Enter") onSelect(movie);
+  };
   return (
     <ul className={css.grid}>
       {movies.map((m) => (
@@ -19,9 +23,7 @@ export const MovieGrid: React.FC<MovieGridProps> = ({ movies, onSelect }) => {
             onClick={() => onSelect(m)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") onSelect(m);
-            }}
+            onKeyDown={(e) => handleKeyDown(e, m)}
           >
             <img
               className={css.image}

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import type { MouseEvent } from "react";
 import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css";
 import { createPortal } from "react-dom";
@@ -12,7 +13,7 @@ const PLACEHOLDER = "https://via.placeholder.com/1280x720?text=No+Image";
 
 export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
+    const handleKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleKey);
@@ -25,7 +26,7 @@ export const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose }) => {
       document.body.style.overflow = prevOverflow;
     };
   }, [onClose]);
-  const handleBackdropClick = (e: React.MouseEvent) => {
+  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
   };
 
